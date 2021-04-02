@@ -3,9 +3,9 @@
 **AuTO**: A Framework for **Au**tomatic differentiation in **T**opology **O**ptimization
 
 Aaditya Chandrasekhar, Saketh Sridhara, Krishnan Suresh  
-[Engineering Representations and Simulation Lab](www.ersl.wisc.edu)  
+[Engineering Representations and Simulation Lab](https://ersl.wisc.edu)  
 University of Wisconsin-Madison  
-The relevant paper can be found [here](www.ersl.wisc.edu/publications/).
+The relevant paper can be found [here](https://ersl.wisc.edu/publications/).
 
 ## Abstract
 A critical step in topology optimization (TO) is finding sensitivities. Manual derivation and implementation of the sensitivities can be quite laborious and error-prone, especially for non-trivial objectives, constraints and material models. An alternate approach is to utilize automatic differentiation (AD). While AD has been conceptualized over decades, and has also been applied in TO, wider adoption has largely been absent.
