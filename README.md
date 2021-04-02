@@ -13,7 +13,11 @@ A critical step in topology optimization (TO) is finding sensitivities. Manual d
 In this educational paper, we aim to reintroduce AD for TO and make it easily accessible through illustrative codes. In particular, we employ JAX, a high-performance Python library for automatically computing sensitivities from a user defined TO problem. The resulting framework, referred to here as AuTO, is illustrated through several examples in compliance minimization, compliant mechanism design and microstructural design.
 
 ## Code
-We present four examples in TO (structural compliance, thermal compliance, design of compliant mechanisms and microstructural design). The standalone notebooks can be run using Google Colab or by installing the required dependencies (JAX, numpy, matplotlib, scipy).
-
-
-
+The code can be run in two ways:
+1. Using Google Colab
+- Click on the file you want to run (for eg. compliance.ipynb)
+- Click on "Open in Colab"
+- Go to "Runtime" and select "Run All"
+2. Clone and run
+- install required dependencies (JAX, numpy, matplotlib, scipy).
+- For windows machines: use WSL
