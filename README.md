@@ -16,6 +16,7 @@ The code can be run in two ways:
 1. Using Google Colab
 - Click on the file you want to run (for eg. compliance.ipynb)
 - Click on "Open in Colab"
+- Ensure to use GPU by edit-notebook settings-GPU(hardware accelerator)
 - Go to "Runtime" and select "Run All"
 2. Clone and run
 - install required dependencies (JAX, numpy, matplotlib, scipy).
