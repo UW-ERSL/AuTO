@@ -1,7 +1,7 @@
 #
 from __future__ import division
-from scipy.sparse import diags # or use numpy: from numpy import diag as diags
-from scipy.linalg import solve # or use numpy: from numpy.linalg import solve
+from scipy.sparse import diags
+from scipy.linalg import solve
 import numpy as np
 import jax
 import jax.numpy as jnp
@@ -320,20 +320,8 @@ def gcmmasub(m,n,iter,epsimin,xval,xmin,xmax,low,upp,raa0,raa,f0val,df0dx,\
     # Return values
     return xmma,ymma,zmma,lam,xsi,eta,mu,zet,s,f0app,fapp
 
-# Function for solving the subproblem (can be used for MMA and GCMMA)
 def subsolv(m,n,epsimin,low,upp,alfa,beta,p0,q0,P,Q,a0,a,b,c,d):
 
-    """
-    This function subsolv solves the MMA subproblem:
-
-    minimize SUM[p0j/(uppj-xj) +q0j/(xj-lowj)]+a0*z+SUM[ci*yi+0.5*di*(yi)^2],
-
-    subject to SUM[pij/(uppj-xj) + qij/(xj-lowj)] - ai*z - yi <= bi,
-        alfaj <=  xj <=  betaj,  yi >= 0,  z >= 0.
-
-    Input:  m, n, low, upp, alfa, beta, p0, q0, P, Q, a0, a, b, c, d.
-    Output: xmma,ymma,zmma, slack variables and Lagrange multiplers.
-    """
 
     een = np.ones((n,1))
     eem = np.ones((m,1))
@@ -529,53 +517,10 @@ def subsolv(m,n,epsimin,low,upp,alfa,beta,p0,q0,P,Q,a0,a,b,c,d):
     mumma = mu
     zetmma = zet
     smma = s
-    # Return values
+ 
     return xmma,ymma,zmma,lamma,xsimma,etamma,mumma,zetmma,smma
 
-# Function for Karush–Kuhn–Tucker check
 def kktcheck(m,n,x,y,z,lam,xsi,eta,mu,zet,s,xmin,xmax,df0dx,fval,dfdx,a0,a,c,d):
-
-    """
-    The left hand sides of the KKT conditions for the following nonlinear
-    programming problem are
-    calculated.
-
-    Minimize f_0(x) + a_0*z + sum(c_i*y_i + 0.5*d_i*(y_i)^2)
-    subject to  f_i(x) - a_i*z - y_i <= 0,   i = 1,...,m
-                xmax_j <= x_j <= xmin_j,     j = 1,...,n
-                z >= 0,   y_i >= 0,          i = 1,...,m
-
-    INPUT:
-        m     = The number of general constraints.
-        n     = The number of variables x_j.
-        x     = Current values of the n variables x_j.
-        y     = Current values of the m variables y_i.
-        z     = Current value of the single variable z.
-        lam   = Lagrange multipliers for the m general constraints.
-        xsi   = Lagrange multipliers for the n constraints xmin_j - x_j <= 0.
-        eta   = Lagrange multipliers for the n constraints x_j - xmax_j <= 0.
-        mu    = Lagrange multipliers for the m constraints -y_i <= 0.
-        zet   = Lagrange multiplier for the single constraint -z <= 0.
-        s     = Slack variables for the m general constraints.
-        xmin  = Lower bounds for the variables x_j.
-        xmax  = Upper bounds for the variables x_j.
-        df0dx = Vector with the derivatives of the objective function f_0
-                with respect to the variables x_j, calculated at x.
-        fval  = Vector with the values of the constraint functions f_i,
-                calculated at x.
-        dfdx  = (m x n)-matrix with the derivatives of the constraint functions
-                f_i with respect to the variables x_j, calculated at x.
-                dfdx(i,j) = the derivative of f_i with respect to x_j.
-        a0    = The constants a_0 in the term a_0*z.
-        a     = Vector with the constants a_i in the terms a_i*z.
-        c     = Vector with the constants c_i in the terms c_i*y_i.
-        d     = Vector with the constants d_i in the terms 0.5*d_i*(y_i)^2.
-
-    OUTPUT:
-        residu     = the residual vector for the KKT conditions.
-        residunorm = sqrt(residu'*residu).
-        residumax  = max(abs(residu)).
-    """
 
     rex = df0dx+np.dot(dfdx.T,lam)-xsi+eta
     rey = c+d*y-mu-lam
@@ -593,13 +538,8 @@ def kktcheck(m,n,x,y,z,lam,xsi,eta,mu,zet,s,xmin,xmax,df0dx,fval,dfdx,a0,a,c,d):
     residumax = np.max(np.abs(residu))
     return residu,residunorm,residumax
 
-# Function for updating raa0 and raa
 def raaupdate(xmma,xval,xmin,xmax,low,upp,f0valnew,\
               fvalnew,f0app,fapp,raa0,raa,raa0eps,raaeps,epsimin):
-
-    """
-    Values of the parameters raa0 and raa are updated during an inner iteration.
-    """
 
     raacofmin = 1e-12
     eeem = np.ones((raa.size,1))
@@ -630,12 +570,8 @@ def raaupdate(xmma,xval,xmin,xmax,low,upp,f0valnew,\
     #
     return raa0,raa
 
-# Function to check if the approsimations are conservative
-def concheck(m,epsimin,f0app,f0valnew,fapp,fvalnew):
 
-    """
-    If the current approximations are conservative, the parameter conserv is set to 1.
-    """
+def concheck(m,epsimin,f0app,f0valnew,fapp,fvalnew):
 
     eeem = np.ones((m,1))
     f0appe = f0app+epsimin
@@ -648,15 +584,11 @@ def concheck(m,epsimin,f0app,f0valnew,fapp,fvalnew):
         conserv = 0
     return conserv
 
-# Calculate low, upp, raa0, raa in the beginning of each outer iteration
+
 def asymp(outeriter,n,xval,xold1,xold2,xmin,xmax,low,upp,raa0,raa,\
           raa0eps,raaeps,df0dx,dfdx):
 
-    """
-    Values on the parameters raa0, raa, low and upp are calculated in the
-    beginning of each outer
-    iteration.
-    """
+
 
     eeen = np.ones((n,1))
     asyinit = 0.5
@@ -690,56 +622,3 @@ def asymp(outeriter,n,xval,xold1,xold2,xmin,xmax,low,upp,raa0,raa,\
     return low,upp,raa0,raa
 
 
-
-    """
-    This function mmasub performs one MMA-iteration, aimed at solving the
-    nonlinear programming problem:
-
-    Minimize    f_0(x) + a_0*z + sum( c_i*y_i + 0.5*d_i*(y_i)^2 )
-    subject to  f_i(x) - a_i*z - y_i <= 0,  i = 1,...,m
-                xmin_j <= x_j <= xmax_j,    j = 1,...,n
-                z >= 0,   y_i >= 0,         i = 1,...,m
-    INPUT:
-        m     = The number of general constraints.
-        n     = The number of variables x_j.
-        iter  = Current iteration number ( =1 the first time mmasub is called).
-        xval  = Column vector with the current values of the variables x_j.
-        xmin  = Column vector with the lower bounds for the variables x_j.
-        xmax  = Column vector with the upper bounds for the variables x_j.
-        xold1 = xval, one iteration ago (provided that iter>1).
-        xold2 = xval, two iterations ago (provided that iter>2).
-        f0val = The value of the objective function f_0 at xval.
-        df0dx = Column vector with the derivatives of the objective function
-                f_0 with respect to the variables x_j, calculated at xval.
-        fval  = Column vector with the values of the constraint functions f_i,
-                calculated at xval.
-        dfdx  = (m x n)-matrix with the derivatives of the constraint functions
-                f_i with respect to the variables x_j, calculated at xval.
-                dfdx(i,j) = the derivative of f_i with respect to x_j.
-        low   = Column vector with the lower asymptotes from the previous
-                iteration (provided that iter>1).
-        upp   = Column vector with the upper asymptotes from the previous
-                iteration (provided that iter>1).
-        a0    = The constants a_0 in the term a_0*z.
-        a     = Column vector with the constants a_i in the terms a_i*z.
-        c     = Column vector with the constants c_i in the terms c_i*y_i.
-        d     = Col vector with the constants d_i in the terms 0.5*d_i*(y_i)^2.
-
-    OUTPUT:
-        xmma  = Column vector with the optimal values of the variables x_j
-                in the current MMA subproblem.
-        ymma  = Column vector with the optimal values of the variables y_i
-                in the current MMA subproblem.
-        zmma  = Scalar with the optimal value of the variable z
-                in the current MMA subproblem.
-        lam   = Lagrange multipliers for the m general MMA constraints.
-        xsi   = Lagrange multipliers for the n constraints alfa_j - x_j <= 0.
-        eta   = Lagrange multipliers for the n constraints x_j - beta_j <= 0.
-        mu    = Lagrange multipliers for the m constraints -y_i <= 0.
-        zet   = Lagrange multiplier for the single constraint -z <= 0.
-        s     = Slack variables for the m general MMA constraints.
-        low   = Column vector with the lower asymptotes, calculated and used
-                in the current MMA subproblem.
-        upp   = Column vector with the upper asymptotes, calculated and used
-                in the current MMA subproblem.
-    """
