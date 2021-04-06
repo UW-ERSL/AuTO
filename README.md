@@ -1,6 +1,6 @@
 # AuTO
 
-[**AuTO**: A Framework for **Au**tomatic differentiation in **T**opology **O**ptimization](https://ersl.wisc.edu/publications/2021/AuTO.pdf)
+[**AuTO**: A Framework for **Au**tomatic differentiation in **T**opology **O**ptimization](https://arxiv.org/abs/2104.01965)
 
 Aaditya Chandrasekhar, Saketh Sridhara, Krishnan Suresh  
 [Engineering Representations and Simulation Lab](https://ersl.wisc.edu)  
