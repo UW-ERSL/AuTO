@@ -13,8 +13,8 @@ In this educational paper, we aim to reintroduce AD for TO and make it easily ac
 
 ## Code
 The code can be run in two ways:
-1. Using Google Colab
-- Click on the file you want to run (for eg. compliance.ipynb)
+1. Using Google Colab (recommended)
+- Click on the file you want to run (for eg. compliance.ipynb). If file doesn't load, click 'Reload'/refresh 
 - Click on "Open in Colab"
 - Ensure to use GPU by edit-notebook settings-GPU(hardware accelerator)
 - Go to "Runtime" and select "Run All"
