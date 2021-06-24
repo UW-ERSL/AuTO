@@ -27,7 +27,7 @@ class Mesher:
 
     # with the material defined, we can now calculate the base
     # constitutive matrix
-    def getD0(self, matProp):
+    def getK0(self, matProp):
         # the base constitutive matrix assumes unit
         #area element with E = 1. and nu prescribed.
         # the material is also assumed to be isotropic.
@@ -48,7 +48,7 @@ class Mesher:
         return KE;
 
 class ThermalMesher:
-    def getD0(self):
+    def getK0(self):
         KE = np.array(\
           [ 2./3., -1./6., -1./3., -1./6.,\
           -1./6.,  2./3., -1./6., -1./3.,\
