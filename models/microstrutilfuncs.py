@@ -54,7 +54,7 @@ def assignMeshDofs(mesh):
 
 #%% Material
 #--------------------------#
-def getD0(matProp):
+def getK0(matProp):
     # the base constitutive matrix assumes unit 
     #area element with E = 1. and nu prescribed.
     # the material is also assumed to be isotropic.
