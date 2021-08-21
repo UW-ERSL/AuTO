@@ -2,7 +2,7 @@
 
 [**AuTO**: A Framework for **Au**tomatic differentiation in **T**opology **O**ptimization](https://arxiv.org/abs/2104.01965)
 
-Aaditya Chandrasekhar, Saketh Sridhara, Krishnan Suresh  
+[Aaditya Chandrasekhar](https://aadityacs.github.io/), Saketh Sridhara, [Krishnan Suresh](https://directory.engr.wisc.edu/me/faculty/suresh_krishnan)  
 [Engineering Representations and Simulation Lab](https://ersl.wisc.edu)  
 University of Wisconsin-Madison 
 
