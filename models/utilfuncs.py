@@ -3,8 +3,6 @@ from __future__ import division
 from scipy.sparse import diags
 from scipy.linalg import solve
 import numpy as np
-import jax
-import jax.numpy as jnp
 
 #--------------------------#
 class Mesher:
@@ -22,7 +20,7 @@ class Mesher:
                                 2*n2+3,2*n2, 2*n2+1, 2*n1, 2*n1+1]);
         iK = tuple(np.kron(edofMat,np.ones((8,1))).flatten().astype(int))
         jK = tuple(np.kron(edofMat,np.ones((1,8))).flatten().astype(int))
-        idx = jax.ops.index[iK,jK]
+        idx = (iK,jK)
         return edofMat, idx;
 
     # with the material defined, we can now calculate the base
@@ -68,7 +66,7 @@ class ThermalMesher:
 
         iK = np.kron(edofMat,np.ones((4,1))).flatten().astype(int);
         jK = np.kron(edofMat,np.ones((1,4))).flatten().astype(int);
-        idx = jax.ops.index[tuple(iK),tuple(jK)]
+        idx = (iK,jK)
 
         return edofMat, idx;
 #--------------------------#
@@ -121,7 +119,7 @@ def computeLocalElements(mesh, dist, avgLocality = False):
 #--------------------------#
 #%% Optimizer
 class MMA:
-    # The code was modified from [MMA Svanberg 1987]. Please cite the paper if 
+    # The code was modified from [MMA Svanberg 1987]. Please cite the paper if
     # you end up using this code.
     def __init__(self):
         self.epoch = 0;
@@ -517,7 +515,7 @@ def subsolv(m,n,epsimin,low,upp,alfa,beta,p0,q0,P,Q,a0,a,b,c,d):
     mumma = mu
     zetmma = zet
     smma = s
- 
+
     return xmma,ymma,zmma,lamma,xsimma,etamma,mumma,zetmma,smma
 
 def kktcheck(m,n,x,y,z,lam,xsi,eta,mu,zet,s,xmin,xmax,df0dx,fval,dfdx,a0,a,c,d):
