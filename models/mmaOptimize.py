@@ -54,7 +54,7 @@ def optimize(mesh, optimizationParams, ft, \
         xold2 = xold1.copy();
         xold1 = xval.copy();
         rho = xmma.copy().flatten()
-        mma.registerMMAIter(rho, xval.copy(), xold1.copy())
+        mma.registerMMAIter(rho, xval.copy(), xold2.copy())
 
         mmaTime += time.perf_counter() - tmr;
 
