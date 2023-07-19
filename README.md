@@ -4,7 +4,7 @@
 
 [Aaditya Chandrasekhar](https://aadityacs.github.io/)\*, [Saketh Sridhara](https://sakethsridhara.github.io/)\*, [Krishnan Suresh](https://directory.engr.wisc.edu/me/faculty/suresh_krishnan)  
 [Engineering Representations and Simulation Lab](https://ersl.wisc.edu)  
-University of Wisconsin-Madison 
+University of Wisconsin-Madison \
 \* - contributed equally.
 
 
